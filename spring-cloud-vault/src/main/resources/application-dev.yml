@@ -1,0 +1,11 @@
+spring.cloud.vault:
+  ssl:
+    trust-store: classpath:/vault.jks
+    trust-store-password: changeit
+  token: s.s5ACIlLsWDzYXZCm0PW43yqD
+  database:
+    enabled: true
+    role: readonly
+    backend: database
+    username-property: spring.datasource.username
+    password-property: spring.datasource.password

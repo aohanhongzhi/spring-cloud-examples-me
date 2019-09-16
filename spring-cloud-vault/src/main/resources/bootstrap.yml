@@ -1,7 +1,10 @@
 spring:
   cloud:
     vault:
-      uri: https://localhost:8200
+      host: localhost
+      port: 8200
+      scheme: https
+      uri: https://localhost:8200 #https
       connection-timeout: 5000
       read-timeout: 15000
       config:
@@ -20,18 +23,16 @@ spring:
         backend: kv
         application-name: fakebank
         
-      database:
+#      database:
+#        enabled: true
+#        role: fakebank-accounts-ro
+#        backend: database
+#        username-property: spring.datasource.username
+#        password-property: spring.datasource.password
+      token: s.s5ACIlLsWDzYXZCm0PW43yqD
+      mysql:
         enabled: true
         role: fakebank-accounts-ro
         backend: database
         username-property: spring.datasource.username
         password-property: spring.datasource.password
-        
-              
-        
-      
-      
-        
-      
-          
-          

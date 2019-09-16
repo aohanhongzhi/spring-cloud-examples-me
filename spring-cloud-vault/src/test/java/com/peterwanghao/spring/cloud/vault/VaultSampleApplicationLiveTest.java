@@ -1,19 +1,20 @@
 package com.peterwanghao.spring.cloud.vault;
 
-import static org.junit.Assert.assertEquals;
+import groovy.util.logging.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.Assert.assertEquals;
 
 /**   
  * @ClassName:  VaultSampleApplicationLiveTest
@@ -23,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @version V1.0
  * 
  */
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class VaultSampleApplicationLiveTest {
@@ -32,6 +34,9 @@ public class VaultSampleApplicationLiveTest {
 
 	@Autowired
 	DataSource datasource;
+
+	@Value("${spring.cloud.vault.database.username-property}")
+	String username;
 
 	//@Test
 	public void whenGenericBackendEnabled_thenEnvHasAccessToVaultSecrets() {
@@ -51,6 +56,7 @@ public class VaultSampleApplicationLiveTest {
 
 	@Test
 	public void whenDatabaseBackendEnabled_thenDatasourceUsesVaultCredentials() {
+		System.out.println(username);
 
 		try (Connection c = datasource.getConnection()) {
 
@@ -58,12 +64,14 @@ public class VaultSampleApplicationLiveTest {
 
 			rs.next();
 			Long value = rs.getLong(1);
+			System.out.printf("访问得到的值：%s\n",value);
 
 			assertEquals(Long.valueOf(1), value);
 
 		} catch (SQLException sex) {
 			throw new RuntimeException(sex);
 		}
+		System.out.println(username);
 
 	}
 
