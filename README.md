@@ -1,0 +1,42 @@
+### spring-cloud-vault
+bootstrap.yml
+```xml
+spring:
+  cloud:
+    vault:
+      host: localhost
+      port: 8200
+      scheme: https
+      uri: https://localhost:8200 #https
+      connection-timeout: 5000
+      read-timeout: 15000
+      config:
+          order: -10
+          
+      ssl:
+        trust-store: classpath:/vault.jks
+        trust-store-password: changeit
+      
+      generic:
+        enabled: true
+        application-name: fakebank
+        
+      kv:
+        enabled: false
+        backend: kv
+        application-name: fakebank
+        
+#      database:
+#        enabled: true
+#        role: fakebank-accounts-ro
+#        backend: database
+#        username-property: spring.datasource.username
+#        password-property: spring.datasource.password
+      token: s.s5ACIlLsWDzYXZCm0PW43yqD
+      mysql:
+        enabled: true
+        role: fakebank-accounts-ro
+        backend: database
+        username-property: spring.datasource.username
+        password-property: spring.datasource.password
+```
